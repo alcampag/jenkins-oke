@@ -32,6 +32,11 @@ Thankfully, nowadays there are more options when it comes to Jenkins provisionin
 to use the [Jenkins Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) to create on-demand Pods for
 every pipline run in Kubernetes.
 
-
+[
+![Deploy to Oracle Cloud]
+(https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)
+]
+(https://cloud.oracle.com/resourcemanager/stacks/create
+?zipUrl=https://github.com/alcampag/jenkins-oke/jenkins-oke.zip)
 
 
