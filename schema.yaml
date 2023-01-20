@@ -1,0 +1,254 @@
+# Title shown in Application Information tab.
+title: "Jenkins OKE"
+# Sub Title shown in Application Information tab.
+description: "A Terraform stack to deploy Jenkins on OKE"
+informationalText: "A Terraform stack to deploy Jenkins on OKE"
+schemaVersion: 1.1.0
+version: "20190304"
+
+locale: "en"
+variableGroups:
+  - title: "General"
+    variables:
+      - region
+      - compartment_ocid
+
+  - title: "Jenkins"
+    variables:
+      - create_oke_cluster
+      - existing_oke_compartment_id
+      - oke_cluster_id
+      - jenkins_controller_namespace
+      - jenkins_admin_username
+      - jenkins_admin_password
+      - jenkins_service_name
+      - jenkins_service_port
+
+  - title: "Jenkins Agents"
+    variables:
+      - create_agent_namespace
+      - agent_namespace
+      - max_concurrent_agents
+
+  - title: "OKE"
+    visible: ${create_oke_cluster}
+    variables:
+      - oke_compartment_id
+      - oke_cluster_name
+      - kubernetes_version
+      - oke_vcn_name
+      - oke_vcn_cidrs
+      - create_node_pool
+
+  - title: "Jenkins image"
+    variables:
+      - custom_image_name
+      - custom_image_tag
+      - jenkins_plugins
+
+  - title: "OCIR"
+    variables:
+      - ocir_compartment_id
+      - auth_token
+
+
+variables:
+
+  tenancy_ocid:
+    type: string
+    title: Tenancy id
+    description: ID of the current tenancy
+    visible: false
+    required: true
+
+  region:
+    type: oci:identity:region:name
+    title: Region
+    description: Region where to create all resources
+    required: true
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    title: Compartment Id
+    description: Compartment Id where to create all resources
+    required: true
+
+  current_user_ocid:
+    type: string
+    title: Current user Id
+    description: Id of the user who is running Resource Manager
+    visible: false
+    required: true
+
+  create_oke_cluster:
+    type: boolean
+    title: Create OKE Cluster
+    description: Let this Stack create an OKE Cluster
+    default: true
+
+  existing_oke_compartment_id:
+    type: oci:identity:compartment:id
+    title: OKE Compartment Id
+    description: The compartment Id of the OKE cluster
+    default: ${compartment_ocid}
+    required: true
+    visible:
+      not:
+        - create_oke_cluster
+
+
+  oke_cluster_id:
+    type: oci:container:cluster:id
+    title: OKE Clusters found in Compartment
+    description: Only select PUBLIC OKE clusters
+    required: true
+    dependsOn:
+      compartmentId: ${existing_oke_compartment_id}
+    visible:
+      not:
+        - create_oke_cluster
+
+  jenkins_controller_namespace:
+    type: string
+    title: Jenkins Kubernetes Namespace
+    description: Namespace where all Jenkins resources will be deployed
+    required: true
+    default: jenkins
+
+  jenkins_admin_username:
+    type: string
+    title: Initial Jenkins username
+    description: First admin user name for Jenkins
+    required: true
+    default: admin
+
+  jenkins_admin_password:
+    type: password
+    title: Initial Jenkins password
+    description: Initial password for the Jenkins admin username
+    required: true
+    confirmation: true
+
+  jenkins_service_name:
+    type: string
+    title: Jenkins Service Name
+    description: Name of the Jenkins service in Kubernetes
+    required: true
+    default: jenkins-controller
+
+  jenkins_service_port:
+    type: integer
+    title: Jenkins Service port
+    description: Port where the Kubernetes Jenkins service will be exposed
+    required: true
+    minimum: 1
+    maximum: 65535
+    default: 80
+
+  create_agent_namespace:
+    type: boolean
+    title: Create agent namespace
+    description: Create a namespace for Jenkins agents, if not selected, Jenkins controller namespace will be used as default
+    default: true
+
+  agent_namespace:
+    type: string
+    title: Jenkins Agent namespace
+    description: Kubernetes namespace for the Jenkins agents
+    visible: create_agent_namespace
+
+  max_concurrent_agents:
+    type: integer
+    title: Maximum concurrent agents
+    description: Maximum number of concurrent agents running on Kubernetes
+    minimum: 1
+    default: 15
+    required: true
+
+  oke_compartment_id:
+    type: oci:identity:compartment:id
+    title: OKE Compartment
+    description: The compartment Id where to create the OKE cluster
+    default: ${compartment_ocid}
+    required: true
+
+  oke_cluster_name:
+    type: string
+    title: Cluster Name
+    description: Name of the OKE cluster to create
+    required: true
+    default: oke-devops
+
+  kubernetes_version:
+    type: oci:kubernetes:versions:id
+    title: Kubernetes version
+    description: Kubernetes version for the OKE cluster
+    required: true
+    dependsOn:
+      compartmentId: ${oke_compartment_id}
+      clusterOptionId: "all"
+
+  oke_vcn_name:
+    type: string
+    title: VCN Name
+    description: Name of the VCN to create for the OKE Cluster
+    required: true
+    default: oke-vcn
+
+  oke_vcn_cidrs:
+    type: array
+    title: VCN CIDRS
+    description: A VCN for the OKE cluster will be created with these CIDRS (max 5)
+    items:
+      type: string
+    maxItems: 5
+    minItems: 1
+    default: [10.0.0.0/16]
+    required: true
+
+  create_node_pool:
+    type: boolean
+    title: Create sample Node Pool
+    description: If selected, the stack will create a sample Node Pool
+    default: true
+
+  custom_image_name:
+    type: string
+    title: Custom Jenkins image name
+    description: A custom Jenkins image will be built with this name
+    required: true
+    default: custom-jenkins
+
+  custom_image_tag:
+    type: string
+    title: Jenkins custom image tag
+    description: Tag of the custom Jenkins image to build
+    required: true
+    default: latest
+
+  jenkins_plugins:
+    type: array
+    title: Jenkins plugins
+    description: Jenkins plugins to include in the custom image
+    items:
+      type: string
+    required: true
+    default: [ "configuration-as-code", "kubernetes", "kubernetes-credentials-provider", "job-dsl", "github", "credentials", "workflow-multibranch", "workflow-aggregator", "pipeline-stage-view", "git", "oracle-cloud-infrastructure-devops", "bouncycastle-api", "ssh-credentials" ]
+
+  ocir_compartment_id:
+    type: oci:identity:compartment:id
+    title: OCIR Compartment Id
+    description: Compartment where the custom Jenkins image will be pushed
+    required: true
+    default: ${compartment_ocid}
+
+  auth_token:
+    type: password
+    title: Auth Token
+    description: Auth Token of the user running this Stack, needed to push the custom image
+    sensitive: true
+    required: true
+
+
+
+

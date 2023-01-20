@@ -1,0 +1,87 @@
+jenkins:
+  systemMessage: |
+    Welcome to our build service on OKE!
+    
+    The aim of this project is to create a simple quickstart for Jenkins on OKE
+    so that deployment and configuration is handled with an "as code" mentality.
+    CasC Jenkins plugin is used to configure this instance. Configurations are
+    stored as yaml in ${controller_namespace}/${casc_configs} Kubernetes configMap.
+    CasC secrets are instead stored in ${controller_namespace}/${casc_secrets}
+    Kubernetes secret.
+    
+    This Jenkins server has been provisioned using Terraform code and the
+    Kubernetes provider.
+    
+    Enjoy,
+    Alcampag
+
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${admin_username}"
+          password: "${admin_password}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  numExecutors: 0
+  clouds:
+    - kubernetes:
+        name: "kubernetes"
+        serverUrl: "https://kubernetes.default"
+        namespace: "${agent_default_namespace}"
+        jenkinsUrl: "http://${jenkins_service_name}.${controller_namespace}.svc.cluster.local:${jenkins_service_port}"
+        jenkinsTunnel: "${jenkins_service_name}.${controller_namespace}.svc.cluster.local:50000"
+        containerCapStr: "${max_concurrent_agents}"
+
+        templates:
+          - name: "agent-0"
+            label: "agent-0"
+            containers:
+              - name: "maven"
+                image: "maven:3.8-openjdk-18-slim"
+                ttyEnabled: true
+                command: cat
+                args: ""
+
+unclassified:
+  location:
+    url: "http://${jenkins_service_name}.${controller_namespace}.svc.cluster.local:${jenkins_service_port}"
+
+
+jobs:
+  - script: >
+      multibranchPipelineJob('sample-jenkins-pipeline') {
+        branchSources {
+          branchSource {
+            source {
+              git {
+                id('sample-jenkins-pipeline')
+                remote('https://github.com/alcampag/jenkins-oke-microservice-sample.git')
+                traits {
+                  gitBranchDiscovery()
+                }
+              }
+            }
+            strategy {
+              allBranchesSame {
+                props {
+                  suppressAutomaticTriggering {
+                    strategy('INDEXING')
+                    triggeredBranchesRegex('main')
+                  }
+                }
+              }
+            }
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(20)
+          }
+        }
+      }
+
