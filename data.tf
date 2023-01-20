@@ -7,7 +7,7 @@ data "oci_containerengine_cluster_kube_config" "cluster_kube_config" {
 }
 
 data "oci_artifacts_container_configuration" "container_configuration" {
-    compartment_id = var.compartment_ocid
+    compartment_id = var.compartment_id
 }
 
 data "oci_identity_user" "current_user" {

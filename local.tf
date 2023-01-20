@@ -1,7 +1,5 @@
 //noinspection HILUnresolvedReference
 locals {
-  ocir_compartment_id = var.ocir_compartment_id == null ? var.compartment_ocid : var.ocir_compartment_id
-  oke_compartment_id = var.oke_compartment_id == null ? var.compartment_ocid : var.oke_compartment_id
   kube_cluster_id = var.create_oke_cluster ? module.oke.0.cluster_id : var.oke_cluster_id
   node_pools = {
     np1 = {shape="VM.Standard.E4.Flex",ocpus=2,memory=16,node_pool_size=2}
