@@ -192,7 +192,7 @@ variables:
     description: Kubernetes version for the OKE cluster
     required: true
     dependsOn:
-      compartmentId: ${oke_compartment_id}
+      compartmentId: ${compartment_ocid}
       clusterOptionId: "all"
 
   oke_vcn_name:
