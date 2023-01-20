@@ -69,8 +69,8 @@ variables:
 
   compartment_ocid:
     type: oci:identity:compartment:id
-    title: Compartment Id
-    description: Compartment Id where to create all resources
+    title: Default Compartment Id
+    description: This Compartment will be used in case a specific compartment is not selected
     required: true
 
   current_user_ocid:
@@ -90,7 +90,6 @@ variables:
     type: oci:identity:compartment:id
     title: OKE Compartment Id
     description: The compartment Id of the OKE cluster
-#    default: ${compartment_ocid}
     required: true
     visible:
       not:
@@ -169,8 +168,6 @@ variables:
     type: oci:identity:compartment:id
     title: OKE Compartment
     description: The compartment Id where to create the OKE cluster
-    default: ${compartment_ocid}
-    required: true
 
   oke_cluster_name:
     type: string
@@ -239,8 +236,6 @@ variables:
     type: oci:identity:compartment:id
     title: OCIR Compartment Id
     description: Compartment where the custom Jenkins image will be pushed
-    required: true
-#    default: ${compartment_ocid}
 
   auth_token:
     type: password

@@ -54,7 +54,6 @@ variable "max_concurrent_agents" {
 
 variable "oke_compartment_id" {
   default = null
-  description = "To be set only if create_oke_cluster is true"
 }
 
 variable "oke_cluster_name" {
@@ -89,7 +88,9 @@ variable "jenkins_plugins" {
   default = [ "configuration-as-code", "kubernetes", "kubernetes-credentials-provider", "job-dsl", "github", "credentials", "workflow-multibranch", "workflow-aggregator", "pipeline-stage-view", "git", "oracle-cloud-infrastructure-devops", "bouncycastle-api", "ssh-credentials" ]
 }
 
-variable "ocir_compartment_id" {}
+variable "ocir_compartment_id" {
+  default = null
+}
 variable "auth_token" {
   sensitive = true
 }
