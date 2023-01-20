@@ -90,7 +90,7 @@ variables:
     type: oci:identity:compartment:id
     title: OKE Compartment Id
     description: The compartment Id of the OKE cluster
-    default: ${compartment_ocid}
+#    default: ${compartment_ocid}
     required: true
     visible:
       not:
@@ -240,7 +240,7 @@ variables:
     title: OCIR Compartment Id
     description: Compartment where the custom Jenkins image will be pushed
     required: true
-    default: ${compartment_ocid}
+#    default: ${compartment_ocid}
 
   auth_token:
     type: password
