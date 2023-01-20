@@ -73,6 +73,12 @@ variables:
     description: Compartment Id where to create all resources
     required: true
 
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    title: Compartment OCID
+    required: false
+    visible: false
+
   current_user_ocid:
     type: string
     title: Current user Id
@@ -156,6 +162,7 @@ variables:
     title: Jenkins Agent namespace
     description: Kubernetes namespace for the Jenkins agents
     visible: create_agent_namespace
+    required: true
 
   max_concurrent_agents:
     type: integer
