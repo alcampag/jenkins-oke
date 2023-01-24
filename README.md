@@ -65,7 +65,20 @@ Allow group <GROUP> to manage repos in compartment <COMPARTMENT>
 
 1. Click on the button below to start the guided Stack creation
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/alcampag/jenkins-oke/raw/main/jenkins-oke.zip)
-2. Upon inserting your Oracle Cloud credentia
+2. Upon inserting your Oracle Cloud credentials, you will be presented with a license agreement, accept it
+and choose a name for the Stack and the compartment where to create it:
+3. Next is the variable section, read the variable descriptions before changing them.
+
+**NOTE:**
+This Terraform Stack will also create a custom Jenkins image and push it on OCIR, the container registry in Oracle Cloud.
+As an option, you can decide the plugins that will be pre-installed by default on this custom image, **removing the default
+plugins can BREAK Jenkins installation!!!**
+
+4. As an additional option, you can choose to install Jenkins in an OKE cluster already present in the tenancy. The only
+limitation here is that the OKE cluster must be Public.
+5. Wait for the Stack to finish, it will take a while if you chose to create the OKE cluster from scratch.
+6. Upon success, the Jenkins url will be returned. You can then start the sample pipeline.
+
 
 
 
