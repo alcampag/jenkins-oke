@@ -79,7 +79,7 @@ plugins can BREAK Jenkins installation!!!**
 4. As an additional option, you can choose to install Jenkins in an OKE cluster already present in the tenancy. The only
 limitation here is that the OKE cluster must be Public.
 5. Wait for the Stack to finish, it will take a while if you chose to create the OKE cluster from scratch.
-6. Upon success, the Jenkins url will be returned. You can then start the sample pipeline.
+6. Upon success, the Jenkins url will be returned as Terraform output. You can then start the sample pipeline.
 
 
 
