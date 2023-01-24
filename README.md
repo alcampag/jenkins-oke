@@ -28,10 +28,44 @@ While this seems an easy solution, there are some issues with this whole setup:
 for the build, which leads again to a waste of resources.
 * Managing many servers for the agents might put a heavy burden on the operation team.
 
-Thankfully, nowadays there are more options when it comes to Jenkins provisioning, one of which is
-to use the [Jenkins Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) to create on-demand Pods for
+Thankfully, there are more options when it comes to Jenkins provisioning, one of which is
+to use the [Jenkins Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) to create on-demand pods for
 every pipline run in Kubernetes.
 
+## Jenkins meets OKE
+
+Oracle Container Engine for Kubernetes (OKE) is a managed Kubernetes service provided by Oracle and will act as the
+base where to deploy Jenkins.
+
+This repository contains the Terraform configurations necessary to instantiate a new OKE cluster and deploy Jenkins on it.
+
+Although it could be possible to execute these Terraform configurations in your local PC, the recommendation is to use
+OCI Resource Manager and create a Stack using the code in this repository.
+
+## Prerequisites
+
+* Having an Oracle Cloud account.
+* Owning at least one [Auth Token](https://docs.oracle.com/en-us/iaas/Content/Registry/Tasks/registrygettingauthtoken.htm).
+* Being an admin or part of a group with these minimum policies:
+```
+Allow group <GROUP> to manage cluster-family in compartment <COMPARTMENT>
+Allow group <GROUP> to manage instance-family in compartment <COMPARTMENT>
+Allow group <GROUP> to use subnets in compartment <COMPARTMENT>
+Allow group <GROUP> to read virtual-network-family in compartment <COMPARTMENT>
+Allow group <GROUP> to use network-security-groups in compartment <COMPARTMENT>
+Allow group <GROUP> to use vnics in compartment <COMPARTMENT>
+Allow group <GROUP> to inspect compartments in tenancy
+Allow group <GROUP> to use private-ips in compartment <COMPARTMENT>
+Allow group <GROUP> to manage public-ips in compartment <COMPARTMENT>
+Allow group <GROUP> to manage repos in compartment <COMPARTMENT>
+```
+
+
+## Quickstart
+
+1. Click on the button below to start the guided Stack creation
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/alcampag/jenkins-oke/raw/main/jenkins-oke.zip)
+2. Upon inserting your Oracle Cloud credentia
+
 
 

@@ -28,6 +28,7 @@ jenkins:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
   numExecutors: 0
+  mode: EXCLUSIVE
   clouds:
     - kubernetes:
         name: "kubernetes"
