@@ -69,6 +69,9 @@ Allow group <GROUP> to manage repos in compartment <COMPARTMENT>
 
 2. Upon inserting your Oracle Cloud credentials, you will be presented with a license agreement, accept it
 and choose a name for the Stack and the compartment where to create it:
+
+![Stack-1]("./.images/stack-1.PNG")
+
 3. Next is the variable section, read the variable descriptions before changing them.
 
 **NOTE:**
