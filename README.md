@@ -72,6 +72,8 @@ and choose a name for the Stack and the compartment where to create it:
 
 ![Stack-1](./.images/stack-1.PNG)
 
+![Stack-2](./.images/stack-2.PNG)
+
 3. Next is the variable section, read the variable descriptions before changing them.
 
 **NOTE:**
