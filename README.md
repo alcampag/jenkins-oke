@@ -32,7 +32,7 @@ Thankfully, there are more options when it comes to Jenkins provisioning, one of
 to use the [Jenkins Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) to create on-demand pods for
 every pipline run in Kubernetes.
 
-## Jenkins meets OKE
+## OKE and Resource Manager
 
 Oracle Container Engine for Kubernetes (OKE) is a managed Kubernetes service provided by Oracle and will act as the
 base where to deploy Jenkins.
