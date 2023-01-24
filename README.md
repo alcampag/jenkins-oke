@@ -64,6 +64,7 @@ Allow group <GROUP> to manage repos in compartment <COMPARTMENT>
 ## Quickstart
 
 1. Click on the button below to start the guided Stack creation
+
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/alcampag/jenkins-oke/raw/main/jenkins-oke.zip)
 2. Upon inserting your Oracle Cloud credentials, you will be presented with a license agreement, accept it
 and choose a name for the Stack and the compartment where to create it:
